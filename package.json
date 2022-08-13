@@ -1,8 +1,8 @@
 {
-  "name": "tablescroll",
-  "version": "1.0.0",
+  "name": "mq-tablescroll",
+  "version": "1.2.0",
   "description": "",
-  "main": "index.jsx",
+  "main": "src/index.jsx",
   "scripts": {
     "start": "webpack server --mode development",
     "build": "webpack --mode development"
@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "antd": "^4.22.4",
+    "axios": "^0.27.2",
     "umi": "3.5.0"
   }
 }

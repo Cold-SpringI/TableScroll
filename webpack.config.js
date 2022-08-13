@@ -47,7 +47,7 @@ module.exports = {
     },
     devServer: {
         port: 3001,  //端口号
-        open: true, // 自动打开浏览器
+        // open: true, // 自动打开浏览器
         compress: true, // 启动gzip压缩
     }
 };

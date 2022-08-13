@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { List } from 'antd'
 import lodash from "lodash";
-// import { request } from 'umi';
+import axios from 'axios';
 import { nanoid } from 'nanoid';
-import './index.less'
+import style from './index.less'
 let scrollInterval = '';
 
 const TableScroll = (props) => {
@@ -14,14 +14,41 @@ const TableScroll = (props) => {
     const [animate, setAnimate] = useState(false)
     const [field, setField] = useState([])
     const [lableNameAndWidth, setLableNameAndWidth] = useState([])
+    const [element, setElement] = useState(<div>暂无数据</div>)
 
     useEffect(() => {
-        // request('http://127.0.0.1:4523/m1/1446276-0-default/event/getListByCon', { method: 'post' }).then(r => {
-        //     setData(r.data)
-        // })
-    }, [])
+        if (props.url) {
+            axios.post(props.url).then(r => {
+                setData(r.data.data)
+            })
+        }
+    }, [props.url])
     useEffect(() => {
-        if (data?.length) {
+        console.log(data);
+        if (data.length) {
+
+
+            setElement(
+                <List
+                    itemLayout="horizontal"
+                    id="scrollList"
+                    style={{ marginTop: listMarginTop }}
+                    className={animate ? style.animate : ''}
+                    dataSource={data}
+                    renderItem={i => (
+                        <List.Item>
+                            <List.Item.Meta
+                                description={
+                                    <div className={style.alarmScroll} >
+                                        {getRow(i)}
+                                    </div>
+                                }
+                            />
+                        </List.Item>
+                    )}
+                />
+            )
+
             scrollInterval = setInterval(() => {
                 startScrollUp()
             }, 3000);
@@ -43,11 +70,11 @@ const TableScroll = (props) => {
         }
     }, [animate, listMarginTop])
     useEffect(() => {
-        if (props.lable?.length) {
+        if (props.lable.length) {
             let arr = []
             let propsField = []
             props.lable.map(i => {
-                arr.push(<div className='name' style={{ width: i.width }} key={nanoid()}>{i.name}</div>)
+                arr.push(<div className={style.name} style={{ width: i.width }} key={nanoid()}>{i.name}</div>)
                 propsField.push({ field: i.field, width: i.width })
             })
             setField(propsField)
@@ -70,42 +97,56 @@ const TableScroll = (props) => {
 
     const getRow = (row) => {
         let arr = []
-        field?.map(i => {
+        field.map(i => {
             arr.push(
-                <div className='lable' key={nanoid()} style={{ width: i.width }}>{row[i.field]}</div>
+                <div className={style.lable} key={nanoid()} style={{ width: i.width }}>{row[i.field]}</div>
             )
         })
+        console.log(arr);
         return arr
     }
 
+    const getElement = () => {
+        let flag
+        console.log(data.length);
+        if (data.length) {
+            flag = (
+                <List
+                    itemLayout="horizontal"
+                    id="scrollList"
+                    style={{ marginTop: listMarginTop }}
+                    className={animate ? style.animate : ''}
+                    dataSource={data}
+                    renderItem={i => (
+                        <List.Item>
+                            <List.Item.Meta
+                                description={
+                                    <div className={style.alarmScroll} >
+                                        {getRow(i)}
+                                    </div>
+                                }
+                            />
+                        </List.Item>
+                    )}
+                />
+            )
+        } else {
+            flag = (<div>1111111111</div>)
+        }
+        return flag
+    }
+
     return (
-        <div className='scroll'>
-            <div className='scrollName'>
+        <div className={style.scroll}>
+            <div className={style.scrollName}>
                 {lableNameAndWidth}
             </div>
-            <div className='scrollMain' ref={scrollMain}>
-                <div className="listContainer" ref={listContainer}
+            <div className={style.scrollMain} ref={scrollMain}>
+                <div className={style.listContainer} ref={listContainer}
                     onMouseEnter={() => { endScroll() }}
-                    onMouseLeave={(e) => { startScrollUp() }}
+                    onMouseLeave={() => { startScrollUp() }}
                 >
-                    {data?.length ? <List
-                        itemLayout="horizontal"
-                        id="scrollList"
-                        style={{ marginTop: listMarginTop }}
-                        className={animate ? "animate" : ''}
-                        dataSource={data}
-                        renderItem={i => (
-                            <List.Item>
-                                <List.Item.Meta
-                                    description={
-                                        <div className='alarmScroll' >
-                                            {getRow(i)}
-                                        </div>
-                                    }
-                                />
-                            </List.Item>
-                        )}
-                    /> : <></>}
+                    {element}
                 </div>
             </div>
         </div>
