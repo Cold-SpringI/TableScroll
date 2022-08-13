@@ -1,7 +1,7 @@
-import { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { List } from 'antd'
 import lodash from "lodash";
-import { request } from 'umi';
+// import { request } from 'umi';
 import { nanoid } from 'nanoid';
 import './index.less'
 let scrollInterval = '';
@@ -16,12 +16,12 @@ const TableScroll = (props) => {
     const [lableNameAndWidth, setLableNameAndWidth] = useState([])
 
     useEffect(() => {
-        request('http://127.0.0.1:4523/m1/1446276-0-default/event/getListByCon', { method: 'post' }).then(r => {
-            setData(r.data)
-        })
+        // request('http://127.0.0.1:4523/m1/1446276-0-default/event/getListByCon', { method: 'post' }).then(r => {
+        //     setData(r.data)
+        // })
     }, [])
     useEffect(() => {
-        if (data.length) {
+        if (data?.length) {
             scrollInterval = setInterval(() => {
                 startScrollUp()
             }, 3000);
@@ -43,7 +43,7 @@ const TableScroll = (props) => {
         }
     }, [animate, listMarginTop])
     useEffect(() => {
-        if (props.lable.length) {
+        if (props.lable?.length) {
             let arr = []
             let propsField = []
             props.lable.map(i => {
@@ -88,7 +88,7 @@ const TableScroll = (props) => {
                     onMouseEnter={() => { endScroll() }}
                     onMouseLeave={(e) => { startScrollUp() }}
                 >
-                    {data.length ? <List
+                    {data?.length ? <List
                         itemLayout="horizontal"
                         id="scrollList"
                         style={{ marginTop: listMarginTop }}
