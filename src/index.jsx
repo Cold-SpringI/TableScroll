@@ -24,10 +24,7 @@ const TableScroll = (props) => {
         }
     }, [props.url])
     useEffect(() => {
-        console.log(data);
         if (data.length) {
-
-
             setElement(
                 <List
                     itemLayout="horizontal"
@@ -56,7 +53,7 @@ const TableScroll = (props) => {
         return () => {
             clearInterval(scrollInterval)
         }
-    }, [data])
+    }, [data,listMarginTop])
     useEffect(() => {
         if (animate && listMarginTop !== '0') {
             setTimeout(() => {
@@ -102,38 +99,7 @@ const TableScroll = (props) => {
                 <div className={style.lable} key={nanoid()} style={{ width: i.width }}>{row[i.field]}</div>
             )
         })
-        console.log(arr);
         return arr
-    }
-
-    const getElement = () => {
-        let flag
-        console.log(data.length);
-        if (data.length) {
-            flag = (
-                <List
-                    itemLayout="horizontal"
-                    id="scrollList"
-                    style={{ marginTop: listMarginTop }}
-                    className={animate ? style.animate : ''}
-                    dataSource={data}
-                    renderItem={i => (
-                        <List.Item>
-                            <List.Item.Meta
-                                description={
-                                    <div className={style.alarmScroll} >
-                                        {getRow(i)}
-                                    </div>
-                                }
-                            />
-                        </List.Item>
-                    )}
-                />
-            )
-        } else {
-            flag = (<div>1111111111</div>)
-        }
-        return flag
     }
 
     return (
