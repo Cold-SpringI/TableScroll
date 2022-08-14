@@ -132,5 +132,5 @@ props: lable,data,headerBackgroundColor,tableBackgroundColor,headerFontColor,tab
   
 <br>
 
-![Image text](https://raw.githubusercontent.com/china78/mq-tablescroll/demo.gif)
-![Image text](https://raw.githubusercontent.com/china78/mq-tablescroll/demo1.png)
+![Image text](https://raw.githubusercontent.com/Cold-SpringI/TableScroll/f26758e9c7cddbca024a50bdeafc35b09b5ebea0/demo.gif)
+![Image text](https://raw.githubusercontent.com/Cold-SpringI/TableScroll/main/demo1.png)
