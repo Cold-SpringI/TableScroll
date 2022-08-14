@@ -1,14 +1,23 @@
 {
   "name": "mq-tablescroll",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "",
   "main": "src/index.jsx",
   "scripts": {
     "start": "webpack server --mode development",
     "build": "webpack --mode development"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cold-SpringI/TableScroll.git"
+  },
   "author": "zardmaa",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Cold-SpringI/TableScroll/issues"
+  },
+  "keywords": ["tablescroll", "scroll", "table", "mq-"],
+  "homepage": "https://github.com/Cold-SpringI/TableScroll#readme",
   "devDependencies": {
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.10",
