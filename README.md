@@ -132,4 +132,5 @@ props: lable,data,headerBackgroundColor,tableBackgroundColor,headerFontColor,tab
   
 <br>
 
-![Image text](https://raw.githubusercontent.com/china78/mq-tablescroll/main/src/assets/demo.png)
+![Image text](https://raw.githubusercontent.com/china78/mq-tablescroll/demo.gif)
+![Image text](https://raw.githubusercontent.com/china78/mq-tablescroll/demo1.png)
