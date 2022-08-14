@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { List } from 'antd'
 import lodash from "lodash";
-import axios from 'axios';
 import { nanoid } from 'nanoid';
 import style from './index.less'
 let scrollInterval = '';
@@ -10,19 +9,42 @@ const TableScroll = (props) => {
     const scrollMain = useRef()
     const listContainer = useRef()
     const [data, setData] = useState([])
+    const [headerBackgroundColor, setHeaderBackgroundColor] = useState("#FFFFFF")
+    const [tableBackgroundColor, setTableBackgroundColor] = useState("transparent")
+    const [headerFontColor, setHeaderFontColor] = useState("#000000")
+    const [tableFontColor, setTableFontColor] = useState("#000000")
+    const [oldData, setOldData] = useState([])
     const [listMarginTop, setListMarginTop] = useState('0')
     const [animate, setAnimate] = useState(false)
     const [field, setField] = useState([])
     const [lableNameAndWidth, setLableNameAndWidth] = useState([])
-    const [element, setElement] = useState(<div>暂无数据</div>)
+    const [element, setElement] = useState(<></>)
 
     useEffect(() => {
-        if (props.url) {
-            axios.post(props.url).then(r => {
-                setData(r.data.data)
-            })
+        if (props.data) {
+            setOldData(props.data)
         }
-    }, [props.url])
+    }, [props.data])
+    useEffect(() => {
+        if (props?.headerBackgroundColor) {
+            setHeaderBackgroundColor(props.headerBackgroundColor)
+        }
+        if (props?.headerFontColor) {
+            setHeaderFontColor(props.headerFontColor)
+        }
+        if (props?.tableBackgroundColor) {
+            setTableBackgroundColor(props.tableBackgroundColor)
+        }
+        if (props?.tableFontColor) {
+            setTableFontColor(props.tableFontColor)
+        }
+    }, [props.headerBackgroundColor, props.headerFontColor, props.tableBackgroundColor, props.tableFontColor])
+    useEffect(() => {
+        const isEqual = lodash.isEqual(oldData, props.data)
+        if (!isEqual && props.data) {
+            setData(props.data)
+        }
+    }, [oldData, props.data])
     useEffect(() => {
         if (data.length) {
             setElement(
@@ -49,11 +71,13 @@ const TableScroll = (props) => {
             scrollInterval = setInterval(() => {
                 startScrollUp()
             }, 3000);
+        } else {
+            setElement(props.emptyElement)
         }
         return () => {
             clearInterval(scrollInterval)
         }
-    }, [data,listMarginTop])
+    }, [data, listMarginTop, props.emptyElement])
     useEffect(() => {
         if (animate && listMarginTop !== '0') {
             setTimeout(() => {
@@ -96,7 +120,11 @@ const TableScroll = (props) => {
         let arr = []
         field.map(i => {
             arr.push(
-                <div className={style.lable} key={nanoid()} style={{ width: i.width }}>{row[i.field]}</div>
+                <div className={style.lable}
+                    key={nanoid()}
+                    style={{ width: i.width, color: tableFontColor }}>
+                    {row[i.field]}
+                </div>
             )
         })
         return arr
@@ -104,10 +132,10 @@ const TableScroll = (props) => {
 
     return (
         <div className={style.scroll}>
-            <div className={style.scrollName}>
+            <div className={style.scrollName} style={{ background: headerBackgroundColor, color: headerFontColor }}>
                 {lableNameAndWidth}
             </div>
-            <div className={style.scrollMain} ref={scrollMain}>
+            <div className={style.scrollMain} ref={scrollMain} style={{ backgroundColor: tableBackgroundColor }}>
                 <div className={style.listContainer} ref={listContainer}
                     onMouseEnter={() => { endScroll() }}
                     onMouseLeave={() => { startScrollUp() }}

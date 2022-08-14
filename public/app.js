@@ -1,6 +1,7 @@
 import React from 'react'
 import TableScroll from '../src/index.jsx'    //引入组件
 import { createRoot } from 'react-dom/client';
+import axios from 'axios';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -41,8 +42,29 @@ const lableNameAndWidth = [
         width: '19%'
     },
 ]
+let data
+axios.post("http://127.0.0.1:4523/m1/1446276-0-default/event/getListByCon").then(r => {
+    data = r.data.data
+})
+
 root.render(
     <>
-        <TableScroll lable={lableNameAndWidth} url="http://127.0.0.1:4523/m1/1446276-0-default/event/getListByCon"/>
+        <TableScroll
+            lable={lableNameAndWidth}
+            data={data}
+            headerBackgroundColor="#5e72e4"
+            tableBackgroundColor="#ff9435"
+            headerFontColor="#35d2ff"
+            tableFontColor="#ff3535"
+            emptyElement={(
+                <div style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}>暂无数据</div>
+            )}
+        />
     </>
 );

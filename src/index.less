@@ -11,6 +11,7 @@
         margin: 0px;
 
     }
+
     :global(.ant-list-item) {
         padding: 4px 0;
         border-bottom: 0px !important;
@@ -24,14 +25,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #90B6E4;
         }
     }
 
     .scrollName {
         width: 100%;
         height: 25px;
-        // background-color: aliceblue;
         display: flex;
         align-items: center;
         justify-content: space-around;
@@ -46,6 +45,7 @@
     .scrollMain {
         width: 100%;
         height: calc(100% - 25px);
+        position: relative;
         overflow: hidden;
 
         .listContainer {
@@ -55,9 +55,7 @@
     }
 
     .animate {
-        // transition: all .8s;
-        transition-property: all;
-    transition-duration: 0.8s;
+        transition: all .8s;
     }
 
 }
